@@ -2,6 +2,8 @@ package ar.com.noaa.api.embarcaciones.entities;
 
 import javax.persistence.Column;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -25,10 +27,11 @@ public class Boya {
     @Column(name = "latitud_instalacion")
     private Double latitudInstalacion;
     @Column(name = "id_luz")
-    private FaroEnum estadoLuz;
+    private Integer estadoLuz;
 
     @OneToMany(mappedBy = "boya", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private List<Muestra> muestras = new ArrayList<>();
 
 	public Integer getBoyaId() {
@@ -56,12 +59,12 @@ public class Boya {
 	}
 
 	public FaroEnum getEstadoLuz() {
-		return this.estadoLuz;
+		return FaroEnum.parse(this.estadoLuz);
 	}
 
 	public void setEstadoLuz(FaroEnum estadoLuz) {
-		this.estadoLuz = estadoLuz;
-	}
+		this.estadoLuz = estadoLuz.getValue();
+    }
 
 	public List<Muestra> getMuestras() {
 		return this.muestras;
