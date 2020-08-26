@@ -40,13 +40,13 @@ public class MuestraControler {
         return ResponseEntity.ok(r);
     }
 
-    @GetMapping("/api/muestras")
+    @GetMapping("/muestras")
     public ResponseEntity<List<Muestra>> readMuestras() {  
         
         return ResponseEntity.ok(muestraService.readAllMuestras());        
     }
     
-    @GetMapping("/api/muestras/{id}")
+    @GetMapping("/muestras/{id}")
     public ResponseEntity<GenericResponse> readBoyaById(@PathVariable Integer id) {
         
         Optional<Muestra> muestra = Optional.ofNullable(muestraService.readByIdMuestra(id));
@@ -76,6 +76,17 @@ public class MuestraControler {
         }
 
         return ResponseEntity.ok(listaNewMuestras);
+    }
+
+    @GetMapping("/api/muestras")
+    public ResponseEntity<Muestra> buscarMuestraPorNombre(@RequestParam(value = "name", required = false) String name) {
+ 
+        Optional<Muestra> muestra = Optional.ofNullable(muestraService.readByNameMuestra(name));
+
+        if (muestra.isPresent())   
+            return ResponseEntity.ok(muestra.get()); 
+
+        return ResponseEntity.notFound().build(); 
     }
 
     @DeleteMapping("/muestras/{id}")

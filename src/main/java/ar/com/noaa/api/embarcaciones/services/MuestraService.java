@@ -19,6 +19,11 @@ public class MuestraService {
         repoMuestra.save(muestra);
     }
 
+    public Muestra readByNameMuestra(String name) {
+        
+        return repoMuestra.findByMatriculaEmbarcacion(name);
+    }
+
     public Muestra readByIdMuestra(Integer id) {
     
         Optional<Muestra> opMuestra = repoMuestra.findById(id);

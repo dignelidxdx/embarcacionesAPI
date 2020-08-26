@@ -8,4 +8,5 @@ import ar.com.noaa.api.embarcaciones.entities.Muestra;
 @Repository
 public interface MuestraRepository extends JpaRepository<Muestra, Integer> {
     
+    public Muestra findByMatriculaEmbarcacion(String matriculaEmbarcacion);
 }
